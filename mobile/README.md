@@ -197,3 +197,25 @@ npm run start
 11. Scan QR with Expo Go (phone) and test flows.
 
 Tip: In VS Code terminal, press `s` to switch Expo to tunnel mode if QR connection fails.
+
+
+## Windows ENOENT fix (package.json not found)
+
+If you see:
+
+```text
+npm error enoent Could not read package.json ... C:\Users\ADMIN\package.json
+```
+
+you are running `npm install` in the wrong folder.
+
+Use this exact flow in PowerShell:
+
+```powershell
+cd "C:\Users\ADMIN\New folder\ExemplosJSP\mobile"
+Get-ChildItem package.json
+npm install
+npm run start
+```
+
+If `Get-ChildItem package.json` fails, you are not in the `mobile` directory yet.

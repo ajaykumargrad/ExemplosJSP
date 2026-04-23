@@ -1,74 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { useAuth } from '../features/auth/AuthProvider';
 import { AuthScreen } from '../features/auth/AuthScreen';
-import { HomeFeedScreen } from '../features/listings/HomeFeedScreen';
-import { ListingDetailScreen } from '../features/listings/ListingDetailScreen';
-import { OrderChatScreen } from '../features/orders/OrderChatScreen';
-import { OrderTimelineScreen } from '../features/orders/OrderTimelineScreen';
-import { ReviewOrderScreen } from '../features/orders/ReviewOrderScreen';
 import { ProfileSetupScreen } from '../features/profile/ProfileSetupScreen';
-import { supabase } from '../lib/supabase';
+import { TabNavigator } from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
 
 export function RootNavigator() {
-  const { isLoading, user } = useAuth();
-  const [profileReady, setProfileReady] = useState(false);
-  const [profileLoading, setProfileLoading] = useState(true);
+  const { isLoading, user, profileReady } = useAuth();
 
-  useEffect(() => {
-    if (!user) {
-      setProfileReady(false);
-      setProfileLoading(false);
-      return;
-    }
-
-    setProfileLoading(true);
-
-    supabase
-      .from('profiles')
-      .select('id, full_name')
-      .eq('id', user.id)
-      .maybeSingle()
-      .then(({ data, error }) => {
-        if (error) {
-          setProfileReady(false);
-          setProfileLoading(false);
-          return;
-        }
-
-        setProfileReady(Boolean(data?.full_name));
-        setProfileLoading(false);
-      });
-  }, [user]);
-
-  if (isLoading || profileLoading) {
+  if (isLoading) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator />
+        <ActivityIndicator color="#0f766e" size="large" />
       </View>
     );
   }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!user ? (
-          <Stack.Screen name="Auth" component={AuthScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Auth" component={AuthScreen} />
         ) : !profileReady ? (
-          <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} options={{ title: 'Profile Setup' }} />
+          <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} options={{ headerShown: true, title: 'Set up profile' }} />
         ) : (
-          <>
-            <Stack.Screen name="Home" component={HomeFeedScreen} options={{ title: 'Pronto' }} />
-            <Stack.Screen name="ListingDetail" component={ListingDetailScreen} options={{ title: 'Listing details' }} />
-            <Stack.Screen name="Orders" component={OrderTimelineScreen} options={{ title: 'My orders' }} />
-            <Stack.Screen name="OrderChat" component={OrderChatScreen} options={{ title: 'Order chat' }} />
-            <Stack.Screen name="ReviewOrder" component={ReviewOrderScreen} options={{ title: 'Review order' }} />
-          </>
+          <Stack.Screen name="Main" component={TabNavigator} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

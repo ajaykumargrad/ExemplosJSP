@@ -5,7 +5,7 @@ import { useAuth } from '../auth/AuthProvider';
 import { supabase } from '../../lib/supabase';
 
 export function ProfileSetupScreen() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, refreshProfile } = useAuth();
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState(user?.phone ?? '');
   const [loading, setLoading] = useState(false);
@@ -53,7 +53,7 @@ export function ProfileSetupScreen() {
       return;
     }
 
-    Alert.alert('Saved', 'Your profile is ready.');
+    await refreshProfile();
   };
 
   return (

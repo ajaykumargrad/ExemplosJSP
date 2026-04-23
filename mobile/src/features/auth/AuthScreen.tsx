@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { supabase } from '../../lib/supabase';
 
@@ -7,7 +7,7 @@ type Channel = 'email' | 'phone';
 
 export function AuthScreen() {
   const [channel, setChannel] = useState<Channel>('email');
-  const [identifier, setIdentifier] = useState('');
+  const [identifier, setIdentifier] = useState('ajaykumargrad@gmail.com');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -67,46 +67,49 @@ export function AuthScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.eyebrow}>PRONTO</Text>
-      <Text style={styles.title}>Welcome back</Text>
-      <Text style={styles.subtitle}>Sign in with email or phone OTP to continue</Text>
+    <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+        <Text style={styles.eyebrow}>PRONTO</Text>
+        <Text style={styles.title}>Welcome back</Text>
+        <Text style={styles.subtitle}>Sign in with email or phone OTP to continue</Text>
 
-      <View style={styles.segmented}>
-        <Pressable style={[styles.segment, channel === 'email' && styles.segmentActive]} onPress={() => setChannel('email')}>
-          <Text style={[styles.segmentText, channel === 'email' && styles.segmentTextActive]}>Email</Text>
-        </Pressable>
-        <Pressable style={[styles.segment, channel === 'phone' && styles.segmentActive]} onPress={() => setChannel('phone')}>
-          <Text style={[styles.segmentText, channel === 'phone' && styles.segmentTextActive]}>Phone</Text>
-        </Pressable>
-      </View>
+        <View style={styles.segmented}>
+          <Pressable style={[styles.segment, channel === 'email' && styles.segmentActive]} onPress={() => setChannel('email')}>
+            <Text style={[styles.segmentText, channel === 'email' && styles.segmentTextActive]}>Email</Text>
+          </Pressable>
+          <Pressable style={[styles.segment, channel === 'phone' && styles.segmentActive]} onPress={() => setChannel('phone')}>
+            <Text style={[styles.segmentText, channel === 'phone' && styles.segmentTextActive]}>Phone</Text>
+          </Pressable>
+        </View>
 
-      <TextInput
-        value={identifier}
-        onChangeText={setIdentifier}
-        placeholder={channel === 'email' ? 'you@example.com' : '+15551234567'}
-        autoCapitalize="none"
-        keyboardType={channel === 'email' ? 'email-address' : 'phone-pad'}
-        style={styles.input}
-      />
+        <TextInput
+          value={identifier}
+          onChangeText={setIdentifier}
+          placeholder={channel === 'email' ? 'you@example.com' : '+15551234567'}
+          autoCapitalize="none"
+          keyboardType={channel === 'email' ? 'email-address' : 'phone-pad'}
+          style={styles.input}
+        />
 
-      {otpSent && <TextInput value={otp} onChangeText={setOtp} placeholder="Enter 6-digit OTP" keyboardType="number-pad" style={styles.input} />}
+        {otpSent && <TextInput value={otp} onChangeText={setOtp} placeholder="Enter 6-digit OTP" keyboardType="number-pad" style={styles.input} />}
 
-      {!otpSent ? (
-        <Pressable style={styles.button} onPress={sendOtp} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Sending...' : 'Send OTP'}</Text>
-        </Pressable>
-      ) : (
-        <Pressable style={styles.button} onPress={verifyOtp} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? 'Verifying...' : 'Verify OTP'}</Text>
-        </Pressable>
-      )}
-    </View>
+        {!otpSent ? (
+          <Pressable style={styles.button} onPress={sendOtp} disabled={loading}>
+            <Text style={styles.buttonText}>{loading ? 'Sending...' : 'Send OTP'}</Text>
+          </Pressable>
+        ) : (
+          <Pressable style={styles.button} onPress={verifyOtp} disabled={loading}>
+            <Text style={styles.buttonText}>{loading ? 'Verifying...' : 'Verify OTP'}</Text>
+          </Pressable>
+        )}
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 24, gap: 12, backgroundColor: '#fff' },
+  flex: { flex: 1, backgroundColor: '#fff' },
+  container: { flexGrow: 1, justifyContent: 'center', padding: 24, gap: 12 },
   eyebrow: { color: '#0f766e', fontWeight: '800', letterSpacing: 1.2 },
   title: { fontSize: 30, fontWeight: '700' },
   subtitle: { color: '#6b7280', marginBottom: 8 },

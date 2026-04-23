@@ -68,8 +68,9 @@ export function AuthScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Pronto</Text>
-      <Text style={styles.subtitle}>Sign in with email or phone OTP</Text>
+      <Text style={styles.eyebrow}>PRONTO</Text>
+      <Text style={styles.title}>Welcome back</Text>
+      <Text style={styles.subtitle}>Sign in with email or phone OTP to continue</Text>
 
       <View style={styles.segmented}>
         <Pressable style={[styles.segment, channel === 'email' && styles.segmentActive]} onPress={() => setChannel('email')}>
@@ -106,7 +107,8 @@ export function AuthScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', padding: 24, gap: 12, backgroundColor: '#fff' },
-  title: { fontSize: 28, fontWeight: '700' },
+  eyebrow: { color: '#0f766e', fontWeight: '800', letterSpacing: 1.2 },
+  title: { fontSize: 30, fontWeight: '700' },
   subtitle: { color: '#6b7280', marginBottom: 8 },
   segmented: { flexDirection: 'row', gap: 8 },
   segment: { flex: 1, paddingVertical: 10, borderRadius: 8, borderWidth: 1, borderColor: '#d1d5db', alignItems: 'center' },

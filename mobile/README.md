@@ -104,3 +104,8 @@ Invoke from the app/backend with a Supabase JWT in `Authorization` header.
    - Unit tests for status transition helpers
    - Integration tests for edge functions and RLS assumptions
    - GitHub Actions pipeline for lint/typecheck/test/migrations dry-run
+
+
+## Immediate next step recommendation
+
+Implement **Stripe PaymentIntent + webhook reconciliation** next, then gate `in_progress` transitions to paid orders only. This gives you revenue safety and cleaner provider payouts.

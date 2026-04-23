@@ -165,3 +165,24 @@ git log --oneline origin/codex/build-mobile-app-with-react-native-and-supabase -
 ```
 
 If local and `origin/...` latest commits match, changes are pushed.
+
+
+## Fix: branch behind + npm ENOENT from repo root
+
+If git says your branch is behind by commits, update first:
+
+```powershell
+cd "C:\Users\ADMIN\Documents\GitHub\Prunto"
+git pull origin codex/build-mobile-app-with-react-native-and-supabase
+```
+
+Then run npm from the **mobile** app folder (not repo root):
+
+```powershell
+cd .\mobile
+Get-ChildItem package.json
+npm install
+npm run start
+```
+
+Untracked local dev folders like `mobile/.expo/` and `mobile/node_modules/` are expected and should not be committed.

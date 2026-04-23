@@ -219,3 +219,39 @@ npm run start
 ```
 
 If `Get-ChildItem package.json` fails, you are not in the `mobile` directory yet.
+
+
+## Windows fix: "not a git repository" + ENOENT
+
+If you see both errors:
+
+- `fatal: not a git repository (or any of the parent directories): .git`
+- `npm ERR! enoent Could not read package.json ... C:\Users\ADMIN\package.json`
+
+it means you are in a folder that is **not** the cloned repo and npm is running outside the app folder.
+
+Use this exact clean setup in PowerShell:
+
+```powershell
+# 1) Go to a parent workspace
+cd "C:\Users\ADMIN\Documents\GitHub"
+
+# 2) Fresh clone (if folder does not exist)
+git clone https://github.com/ajaykumargrad/ExemplosJSP.git
+
+# 3) Enter repo root (must contain .git)
+cd .\ExemplosJSP
+Get-ChildItem .git
+
+# 4) Enter mobile app folder (must contain package.json)
+cd .\mobile
+Get-ChildItem package.json
+
+# 5) Install and run
+npm install
+cp .env.example .env
+npm run start
+```
+
+If `Get-ChildItem .git` fails, you're not at repo root.
+If `Get-ChildItem package.json` fails, you're not in `mobile`.

@@ -109,3 +109,40 @@ Invoke from the app/backend with a Supabase JWT in `Authorization` header.
 ## Immediate next step recommendation
 
 Implement **Stripe PaymentIntent + webhook reconciliation** next, then gate `in_progress` transitions to paid orders only. This gives you revenue safety and cleaner provider payouts.
+
+
+## Run on your phone (Expo Go)
+
+1. Install **Expo Go** on your phone:
+   - iOS: App Store
+   - Android: Play Store
+
+2. In terminal (inside `mobile/`):
+
+```bash
+npm install
+cp .env.example .env
+# edit .env with your real Supabase URL + anon key
+supabase db push
+supabase functions deploy order-actions
+npm run start
+```
+
+3. Open the app:
+   - iOS: use Camera app to scan the QR code shown by Expo.
+   - Android: open Expo Go and scan the QR code.
+
+4. If connection fails:
+   - press `s` in Expo terminal to switch to **tunnel** mode
+   - ensure phone and laptop share internet (same Wi-Fi is easiest)
+
+## Test checklist on mobile
+
+- Sign in with email OTP and phone OTP
+- Complete profile setup
+- Open feed and change categories
+- Open a listing and create request
+- Update order status from timeline
+- Send chat messages in an order
+- Submit a review on completed order
+- Verify notification prompt appears

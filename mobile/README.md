@@ -146,3 +146,54 @@ npm run start
 - Send chat messages in an order
 - Submit a review on completed order
 - Verify notification prompt appears
+
+
+## Visual Studio Code setup (step by step)
+
+1. Open VS Code.
+2. `File -> Open Folder...` and choose the `mobile` folder.
+3. Open terminal in VS Code: `Terminal -> New Terminal`.
+4. Run install:
+
+```bash
+npm install
+```
+
+5. Create env file:
+
+```bash
+cp .env.example .env
+```
+
+6. In VS Code Explorer, open `.env` and set:
+   - `EXPO_PUBLIC_SUPABASE_URL`
+   - `EXPO_PUBLIC_SUPABASE_ANON_KEY`
+
+7. Login and link Supabase CLI (if not already):
+
+```bash
+supabase login
+supabase link --project-ref YOUR_PROJECT_REF
+```
+
+8. Apply database migrations:
+
+```bash
+supabase db push
+```
+
+9. Deploy edge function:
+
+```bash
+supabase functions deploy order-actions
+```
+
+10. Start app:
+
+```bash
+npm run start
+```
+
+11. Scan QR with Expo Go (phone) and test flows.
+
+Tip: In VS Code terminal, press `s` to switch Expo to tunnel mode if QR connection fails.

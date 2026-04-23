@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { HomeStack } from './HomeStack';
 import { BookingsScreen } from '../features/bookings/BookingsScreen';
+import { ProfileStack } from './ProfileStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,7 @@ export function TabNavigator() {
           paddingBottom: 8,
           paddingTop: 6,
         },
-        tabBarActiveTintColor: '#0f766e',
+        tabBarActiveTintColor: '#111827',
         tabBarInactiveTintColor: '#94a3b8',
         tabBarLabelStyle: { fontWeight: '600', fontSize: 12 },
       }}
@@ -30,7 +31,9 @@ export function TabNavigator() {
         component={HomeStack}
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 22 }}>🏠</Text>,
+          tabBarIcon: ({ focused }) => (
+            <Text style={{ fontSize: 22 }}>{focused ? '🏠' : '🏡'}</Text>
+          ),
         }}
       />
       <Tab.Screen
@@ -42,7 +45,20 @@ export function TabNavigator() {
           headerTitle: 'My Bookings',
           headerStyle: { backgroundColor: '#fff' },
           headerShadowVisible: false,
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 22 }}>📋</Text>,
+          headerTitleStyle: { fontWeight: '700', color: '#111827' },
+          tabBarIcon: ({ focused }) => (
+            <Text style={{ fontSize: 22 }}>📋</Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ProfileTab"
+        component={ProfileStack}
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ focused }) => (
+            <Text style={{ fontSize: 22 }}>👤</Text>
+          ),
         }}
       />
     </Tab.Navigator>

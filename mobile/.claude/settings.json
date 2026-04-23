@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(git rm *)",
+      "Bash(git -C /c/Users/ADMIN/Documents/GitHub/Prunto ls-files --cached mobile/node_modules)"
+    ]
+  }
+}

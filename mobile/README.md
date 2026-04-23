@@ -76,3 +76,31 @@ supabase functions deploy order-actions
 ```
 
 Invoke from the app/backend with a Supabase JWT in `Authorization` header.
+
+
+## Suggested next milestones
+
+1. **Provider app controls**
+   - Create/edit listings screens
+   - Availability slots + blackout dates
+   - Pause/reactivate listings
+
+2. **Payments and escrow**
+   - Stripe PaymentIntent + webhook confirmation
+   - Mark orders paid before moving to `in_progress`
+   - Payout-ready reporting for providers
+
+3. **Admin + trust and safety**
+   - Admin moderation dashboard for listings/reviews/messages
+   - Report/block user flows
+   - Fraud rules (velocity checks, device fingerprint flags)
+
+4. **Observability + operations**
+   - Sentry crash + performance monitoring
+   - Centralized audit log explorer
+   - Alerting on failed edge function calls / error spikes
+
+5. **Testing + CI/CD**
+   - Unit tests for status transition helpers
+   - Integration tests for edge functions and RLS assumptions
+   - GitHub Actions pipeline for lint/typecheck/test/migrations dry-run

@@ -196,3 +196,12 @@ Then create your tables/policies and wire the app screen by screen.
 ---
 
 If you want, the next step can be a full **starter code scaffold** (navigation, auth context, listings, order creation, and realtime chat) ready to run.
+
+
+## 10) Suggested next milestones after Step 8
+
+- Provider-side listing management (CRUD + availability windows)
+- Stripe payments + webhook reconciliation before service fulfillment
+- Admin moderation workflows (reports, blocks, abuse queues)
+- Observability (Sentry, error budgets, alerting)
+- Test automation (unit, integration, migration smoke tests)

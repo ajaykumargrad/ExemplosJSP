@@ -9,6 +9,7 @@ This folder now contains:
 - ✅ **Step 5**: In-app chat per order
 - ✅ **Step 6**: Ratings and reviews
 - ✅ **Step 7**: Push notifications
+- ✅ **Step 8**: Production hardening
 
 ## What is implemented
 
@@ -27,7 +28,9 @@ This folder now contains:
 - Realtime-ready order chat screen (`OrderChat`) with message list and composer
 - Review flow (`ReviewOrder`) to rate completed orders and save feedback
 - Notification provider to register Expo push tokens and react to order status changes
-- SQL migrations for `profiles`, `listings`, `orders`, `messages`, `reviews`, and push notification tables with RLS + transition enforcement
+- Edge Function `order-actions` for server-side validated order creation/status updates
+- Hardening migration with strict transition authorization, audit events, and rate-limit hooks
+- SQL migrations for `profiles`, `listings`, `orders`, `messages`, `reviews`, and push notification/security tables with RLS + transition enforcement
 
 ## Run locally
 
@@ -64,3 +67,12 @@ supabase db push
 - Phone auth requires SMS provider configured in Supabase.
 - If location permission is denied, the app still loads listings but skips distance sorting.
 - For production, add anti-abuse rate limits and audit logs in Edge Functions.
+
+
+## Deploy edge functions
+
+```bash
+supabase functions deploy order-actions
+```
+
+Invoke from the app/backend with a Supabase JWT in `Authorization` header.

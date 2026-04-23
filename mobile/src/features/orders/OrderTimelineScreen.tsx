@@ -71,7 +71,13 @@ export function OrderTimelineScreen() {
     if (!canUpdateTo(order, next)) return;
 
     setUpdatingId(order.id);
-    const { error } = await supabase.from('orders').update({ status: next }).eq('id', order.id);
+    const { error } = await supabase.functions.invoke('order-actions', {
+      body: {
+        action: 'update_status',
+        order_id: order.id,
+        next_status: next
+      }
+    });
     setUpdatingId(null);
 
     if (error) {

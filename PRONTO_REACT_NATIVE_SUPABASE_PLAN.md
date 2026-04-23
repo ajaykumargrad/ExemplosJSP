@@ -6,7 +6,8 @@
 > ✅ Step 4 (order status timeline) is scaffolded in `mobile/`.
 > ✅ Step 5 (in-app chat per order) is scaffolded in `mobile/`.
 > ✅ Step 6 (ratings and reviews) is scaffolded in `mobile/`.
-> ✅ Step 7 (push notifications) is scaffolded in `mobile/`. See `mobile/README.md`.
+> ✅ Step 7 (push notifications) is scaffolded in `mobile/`.
+> ✅ Step 8 (production hardening: edge validation + strict authorization + rate limits) is scaffolded in `mobile/`. See `mobile/README.md`.
 
 This guide gives you a practical starter architecture to build a **Pronto-style app** (fast onboarding, location-aware listings, bookings/orders, in-app chat, and payments).
 

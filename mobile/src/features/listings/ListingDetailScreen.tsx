@@ -62,12 +62,11 @@ export function ListingDetailScreen() {
 
     setSubmitting(true);
 
-    const { error } = await supabase.from('orders').insert({
-      customer_id: user.id,
-      provider_id: listing.provider_id,
-      listing_id: listing.id,
-      status: 'requested',
-      total_cents: listing.price_cents
+    const { error } = await supabase.functions.invoke('order-actions', {
+      body: {
+        action: 'create_order',
+        listing_id: listing.id
+      }
     });
 
     setSubmitting(false);
